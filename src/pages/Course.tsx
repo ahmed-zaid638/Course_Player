@@ -31,7 +31,7 @@ const Course = () => {
   const [selectedVideoUrl, setSelectedVideoUrl] =
     useState<string>(firstAvailableVideo);
 
-  const handleCurriculumItemClick = (type: any, id: any) => {
+  const handleCurriculumItemClick = (type: string, id: number) => {
     if (type === "lesson") {
       console.log("Lesson clicked!", id);
       const selectedItem = curriculumData

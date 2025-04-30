@@ -10,7 +10,7 @@ interface BreadcrumbProps {
   items: BreadcrumbItem[];
 }
 
-const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
+const Breadcrumb = ({ items }: BreadcrumbProps) => {
   return (
     <nav aria-label="breadcrumb" className="py-6">
       <ol className="flex flex-wrap items-center space-x-1 text-gray-600 text-sm font-medium max-w-6xl mx-auto px-4 ">

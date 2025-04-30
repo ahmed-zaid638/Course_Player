@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
 import CurriculumItemDetails from "./CurriculumItemDetails";
 
-const CurriculumItem: React.FC = ({ data, onClick }: any) => {
+const CurriculumItem = ({ data, onClick }: any) => {
+  console.log("CurriculumItem data:", data);
   const [isOpen, setIsOpen] = useState(false);
   console.log(isOpen);
 

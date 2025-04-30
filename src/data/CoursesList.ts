@@ -1,25 +1,4 @@
-export type CurriculumItemType = "lesson" | "exam" | "pdf";
-
-export interface CurriculumItem {
-  id: number;
-  title: string;
-  isLocked: boolean;
-  videoUrl: string;
-  type: CurriculumItemType;
-  duartion?: string;
-}
-
-export interface CurriculumSection {
-  id: number;
-  title: string;
-  items: CurriculumItem[];
-}
-
-export interface Course {
-  id: number;
-  title: string;
-  curriculum: CurriculumSection[];
-}
+import { Course } from "../types/curriculum";
 export const CoursesData: Course[] = [
   {
     id: 1,

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import ReactPlayer from "react-player";
 import { Play, Pause } from "lucide-react";
 
@@ -6,7 +6,7 @@ interface VideoPlayerProps {
   url: string;
 }
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }: any) => {
+const VideoPlayer = ({ url }: VideoPlayerProps) => {
   const playerRef = useRef<ReactPlayer>(null);
   const [playing, setPlaying] = useState(false);
   const [showIcon, setShowIcon] = useState(true);
