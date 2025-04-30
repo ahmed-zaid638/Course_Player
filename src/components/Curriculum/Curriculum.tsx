@@ -1,16 +1,17 @@
 import CurriculumItem from "./CurriculumItem";
 import ProgressBar from "../ProgressBar";
 
-const Curriculum = () => {
+const Curriculum: React.FC = ({ data, onClick }: any) => {
+  ("");
   return (
     <section className="max-w-3xl mx-auto">
       <div className="text-xl  font-semibold mb-12">Topics for this course</div>
       <div className="mb-12">
         <ProgressBar />
       </div>
-      {[1, 2, 3].map(() => (
+      {data.map((item: any) => (
         <div className="">
-          <CurriculumItem />
+          <CurriculumItem data={item} onClick={onClick} />
         </div>
       ))}
     </section>

@@ -1,13 +1,6 @@
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
-
-interface Comment {
-  id: string;
-  studentName: string;
-  date: string;
-  content: string;
-  avatarUrl: string;
-}
+import { Comment, defaultComments } from "../../data/CommentsList";
 
 interface CommentsProps {
   initialComments?: Comment[];
@@ -20,37 +13,7 @@ export default function Comments({
   onSubmitComment,
 }: CommentsProps) {
   const [comments, setComments] = useState<Comment[]>(
-    initialComments.length > 0
-      ? initialComments
-      : [
-          {
-            id: "1",
-            studentName: "Student Name Goes Here",
-            date: "Oct 10, 2021",
-            content:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            avatarUrl:
-              "https://www.corporatephotographerslondon.com/wp-content/uploads/2022/02/FRA-1699dark-sq.jpg",
-          },
-          {
-            id: "2",
-            studentName: "Student Name Goes Here",
-            date: "Oct 15, 2021",
-            content:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            avatarUrl:
-              "https://www.corporatephotographerslondon.com/wp-content/uploads/2022/02/FRA-1699dark-sq.jpg",
-          },
-          {
-            id: "3",
-            studentName: "Student Name Goes Here",
-            date: "Oct 18, 2021",
-            content:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            avatarUrl:
-              "https://www.corporatephotographerslondon.com/wp-content/uploads/2022/02/FRA-1699dark-sq.jpg",
-          },
-        ]
+    initialComments.length > 0 ? initialComments : defaultComments
   );
 
   const [newComment, setNewComment] = useState("");
@@ -67,7 +30,7 @@ export default function Comments({
         year: "numeric",
       }),
       content: newComment,
-      avatarUrl: "/abstract-colorful-shapes.png",
+      avatarUrl: "https://www.gravatar.com/avatar/?d=mp",
     };
 
     setComments([...comments, comment]);
@@ -79,7 +42,7 @@ export default function Comments({
   };
 
   return (
-    <div className={`p-4 mt-5`}>
+    <div className={`py-4 mt-5`} >
       <h2 className="text-xl font-semibold text-gray-800 mb-6">Comments</h2>
 
       <div className="space-y-6 mb-6">
@@ -110,7 +73,7 @@ export default function Comments({
         />
         <button
           onClick={handleSubmitComment}
-          className="bg-emerald-500 hover:bg-emerald-600 text-white py-2 px-4 rounded transition flex items-center gap-2"
+          className="bg-emerald-500 cursor-pointer hover:bg-emerald-600 text-white py-2 px-4 rounded transition flex items-center gap-2"
         >
           Submit Review
           <ArrowRight size={16} />

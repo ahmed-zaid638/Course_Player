@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 
 const ProgressBar = () => {
   const initialPercentage = 84;
-  const showPercentage = true;
   const className = "";
 
   const [mounted, setMounted] = useState(false);
-  const [percentage, setPercentage] = useState(initialPercentage);
+  const [percentage] = useState(initialPercentage);
 
   useEffect(() => {
     setMounted(true);

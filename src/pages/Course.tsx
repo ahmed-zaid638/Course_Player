@@ -2,28 +2,52 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import VideoPlayer from "../components/Player/VideoPlayer";
 import Curriculum from "../components/Curriculum/Curriculum";
-import videos, { Video } from "../data/vidoes";
-
-import Layout from "../layout"; // use Layout
+import Layout from "../layout";
 import SectionsNav from "../components/UI/SeationsNave";
 import CourseMaterials from "../components/CourseMaterials";
 import Comments from "../components/Comments";
+import { CoursesData } from "../data/CoursesList";
+import ExamModal from "../components/Exam/ExamModal";
+import AskQuestionModal from "../components/AskQuestion";
+import CourseLeaderboard from "../components/Leaderboard";
+import PdfModal from "../components/Modals/PdfModal";
 
 const Course = () => {
   const { id } = useParams<{ id: string }>();
-  const currentVideo: Video =
-    videos.find((video) => video.id === Number(id)) || videos[0];
+  const [ExamModalOpen, setExamModalOpen] = useState(false);
+  const [leaderboardModalOpen, setLeaderboardModalOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [showPdfModal, setShowPdfModal] = useState(false);
 
-  const [watchedVideos, setWatchedVideos] = useState<number[]>(() => {
-    const stored = localStorage.getItem("watchedVideos");
-    return stored ? JSON.parse(stored) : [];
-  });
+  const courseId = Number(id);
+  const currentCourse = CoursesData.find((course) => course.id === courseId);
+  const curriculumData = currentCourse?.curriculum;
 
-  const handleProgress = ({ played }: { played: number }) => {
-    if (played >= 0.8 && !watchedVideos.includes(currentVideo.id)) {
-      const updated = [...watchedVideos, currentVideo.id];
-      setWatchedVideos(updated);
-      localStorage.setItem("watchedVideos", JSON.stringify(updated));
+  const firstAvailableVideo =
+    curriculumData
+      ?.flatMap((section) => section.items)
+      .find((item) => !item.isLocked)?.videoUrl ?? "";
+
+  const [selectedVideoUrl, setSelectedVideoUrl] =
+    useState<string>(firstAvailableVideo);
+
+  const handleCurriculumItemClick = (type: any, id: any) => {
+    if (type === "lesson") {
+      console.log("Lesson clicked!", id);
+      const selectedItem = curriculumData
+        ?.flatMap((section) => section.items)
+        .find((item) => item.id === id);
+      if (selectedItem) {
+        console.log("Selected item:", selectedItem);
+        setSelectedVideoUrl(selectedItem.videoUrl);
+      }
+    }
+    if (type === "pdf") {
+      setShowPdfModal(true);
+    }
+    if (type === "exam") {
+      setExamModalOpen(true);
+      console.log("exam clicked!");
     }
   };
 
@@ -33,25 +57,57 @@ const Course = () => {
     { label: "Course Details", path: `/course/${id}` },
   ];
 
-  if (!currentVideo) {
+  const handleModalsClick = (type: string) => {
+    if (type === "ask-question") {
+      setModalOpen(true);
+    }
+    if (type === "leaderboard") {
+      setLeaderboardModalOpen(true);
+      console.log("leaderboard clicked!");
+    }
+  };
+  if (!currentCourse) {
     return (
       <Layout breadcrumbItems={breadcrumbItems} title="Course Not Found">
-        <div className="text-center py-10 text-red-500">Video not found.</div>
+        <div className="text-center py-10 text-red-500">Course not found.</div>
       </Layout>
     );
   }
 
   return (
-    <Layout breadcrumbItems={breadcrumbItems} title={currentVideo.title}>
+    <Layout breadcrumbItems={breadcrumbItems} title={currentCourse.title}>
+      <div>
+        <div className="p-4">
+          {showPdfModal && (
+            <PdfModal
+              fileUrl="/sample.pdf"
+              onClose={() => setShowPdfModal(false)}
+            />
+          )}
+        </div>
+        {ExamModalOpen && (
+          <ExamModal
+            isOpen={ExamModalOpen}
+            onClose={() => setExamModalOpen(false)}
+          />
+        )}
+        <AskQuestionModal
+          isOpen={isModalOpen}
+          onClose={() => setModalOpen(false)}
+        />
+        {leaderboardModalOpen && (
+          <CourseLeaderboard
+            courseName={"Test"}
+            onClose={() => setLeaderboardModalOpen(false)}
+          />
+        )}
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="col-span-2">
-          <VideoPlayer
-            url={currentVideo.url}
-            onProgress={handleProgress}
-            playing
-          />
+          <VideoPlayer url={selectedVideoUrl} />
           <div>
-            <SectionsNav />
+            <SectionsNav onClick={handleModalsClick} />
           </div>
           <div className="mt-8">
             <h2 className="text-xl font-semibold mb-4 hidden md:block">
@@ -59,13 +115,16 @@ const Course = () => {
             </h2>
             <CourseMaterials />
           </div>
-          <div className="hidden md:block">
+          <div className="hidden md:block" id="comments">
             <Comments />
           </div>
         </div>
-        <div className="">
-          <Curriculum />
-          <div className="block md:hidden">
+        <div className="" id="curriculum">
+          <Curriculum
+            data={curriculumData}
+            onClick={handleCurriculumItemClick}
+          />
+          <div className="block md:hidden" id="comments">
             <Comments />
           </div>
         </div>

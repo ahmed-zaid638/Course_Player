@@ -1,5 +1,3 @@
-"use client";
-
 import type React from "react";
 import { useState } from "react";
 import { BookOpen, MessageCircle, HelpCircle, Trophy } from "lucide-react";
@@ -9,17 +7,14 @@ interface SectionsNavItem {
   label: string;
   id: string;
 }
-
 interface SectionsNavProps {
-  onSectionChange?: (sectionId: string) => void;
   defaultActiveSection?: string;
-  className?: string;
+  onClick?: (type : string) => void;
 }
 
 const SectionsNav = ({
-  onSectionChange,
   defaultActiveSection = "curriculum",
-  className = "",
+  onClick,
 }: SectionsNavProps) => {
   const [activeSection, setActiveSection] = useState(defaultActiveSection);
 
@@ -34,16 +29,54 @@ const SectionsNav = ({
     { icon: <Trophy size={20} />, label: "Leaderboard", id: "leaderboard" },
   ];
 
+  const handleCommentClick = () => {
+    const el = document.getElementById("comments");
+    if (el) {
+      console.log("Element found:", el);
+      el.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleAskQuestionClick = () => {
+     onClick?.("ask-question");
+  };
+  const handleLeaderboardClick = () => {
+    onClick?.("leaderboard");
+  };
+  const handleCurriculumClick = () => {
+    const el = document.getElementById("curriculum");
+    if (el) {
+      console.log("Element found:", el);
+      el.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  };
+
   const handleSectionClick = (sectionId: string) => {
     setActiveSection(sectionId);
-    if (onSectionChange) {
-      onSectionChange(sectionId);
+    if (sectionId === "comments") {
+      handleCommentClick();
+      return;
+    }
+    if (sectionId === "ask-question") {
+      handleAskQuestionClick();
+      return;
+    }
+    if (sectionId === "leaderboard") {
+      handleLeaderboardClick();
+      return;
+    }
+    if (sectionId === "curriculum") {
+      handleCurriculumClick();
+      return;
     }
   };
 
   return (
     <div
-      className={`flex flex-wrap justify-between md:justify-start px-2  gap-4 md:gap-8 mt-4 ${className}`}
+      className={`flex flex-wrap justify-between md:justify-start px-2  gap-4 md:gap-8 mt-4 `}
     >
       {items.map((item) => {
         const isActive = activeSection === item.id;
@@ -64,7 +97,7 @@ const SectionsNav = ({
         ].join(" ");
 
         const buttonClasses = [
-          "flex flex-col items-center transition-all duration-200",
+          "flex flex-col items-center transition-all duration-200 cursor-pointer",
           "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
           "group",
         ].join(" ");

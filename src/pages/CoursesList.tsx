@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import videos from "../data/vidoes";
 import Layout from "../layout"; // use Layout
+import { CoursesData } from "../data/CoursesList";
 
 const CoursesList = () => {
   const breadcrumbItems = [
@@ -14,13 +14,13 @@ const CoursesList = () => {
       <p className="text-lg mb-6">Select a video to start learning!</p>
 
       <ul className="space-y-4">
-        {videos.map((video) => (
-          <li key={video.id}>
+        {CoursesData.map((course) => (
+          <li key={course.id}>
             <Link
-              to={`/course/${video.id}`}
+              to={`/course/${course.id}`}
               className="block p-4 bg-white rounded-lg shadow hover:bg-green-50 transition"
             >
-              {video.title}
+              {course.title}
             </Link>
           </li>
         ))}

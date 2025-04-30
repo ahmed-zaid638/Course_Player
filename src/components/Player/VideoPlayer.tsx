@@ -6,7 +6,7 @@ interface VideoPlayerProps {
   url: string;
 }
 
-const VideoPlayer: React.FC<VideoPlayerProps> = () => {
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }: any) => {
   const playerRef = useRef<ReactPlayer>(null);
   const [playing, setPlaying] = useState(false);
   const [showIcon, setShowIcon] = useState(true);
@@ -27,7 +27,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = () => {
     <div className="relative w-full" style={{ aspectRatio: "16 / 9" }}>
       <ReactPlayer
         ref={playerRef}
-        url={"https://vimeo.com/76979871"}
+        url={url || "https://vimeo.com/76979871"}
         playing={playing}
         controls
         width="100%"

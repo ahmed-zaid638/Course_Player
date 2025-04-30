@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import videos from "../data/vidoes";
-import Layout from "../layout"; // use Layout
+import Layout from "../layout";
 
 const Home = () => {
   const breadcrumbItems = [{ label: "Home", path: "/" }];
