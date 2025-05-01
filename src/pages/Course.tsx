@@ -97,7 +97,7 @@ const Course = () => {
         />
         {leaderboardModalOpen && (
           <CourseLeaderboard
-            courseName={"Test"}
+            courseName={currentCourse.title}
             onClose={() => setLeaderboardModalOpen(false)}
           />
         )}
@@ -105,7 +105,7 @@ const Course = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="col-span-2">
-          <VideoPlayer url={selectedVideoUrl} />
+          <VideoPlayer url={selectedVideoUrl} key={selectedVideoUrl} />
           <div>
             <SectionsNav onClick={handleModalsClick} />
           </div>

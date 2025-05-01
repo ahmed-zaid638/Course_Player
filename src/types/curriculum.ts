@@ -7,7 +7,6 @@ export interface CurriculumItemData {
   description?: string;
 }
 
-
 export interface CurriculumItem {
   id: number;
   title: string;
@@ -21,6 +20,7 @@ export interface CurriculumSection {
   id: number;
   title: string;
   items: CurriculumItem[];
+  duration?: string;
 }
 
 export interface Course {

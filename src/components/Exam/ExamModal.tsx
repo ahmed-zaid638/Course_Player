@@ -43,7 +43,7 @@ export default function ExamModal({ isOpen, onClose }: ExamModalProps) {
     <div className="fixed inset-0 bg-opacity-40 z-20 flex items-center justify-center">
       <div
         ref={modalRef}
-        className="flex flex-col h-[80vh] max-w-md mx-auto bg-white shadow-lg absolute z-20 rounded-lg w-[40%] left-0 right-0 top-5 bottom-0 m-auto"
+        className="flex flex-col h-[80vh] max-w-md mx-auto bg-white shadow-lg absolute z-20 rounded-lg w-[90%] left-0 right-0 top-5 bottom-0 m-auto"
       >
         <div className="flex flex-col h-full bg-blue-600 pb-5 rounded-lg">
           <ExamHeader timer={"00:59:12"} />

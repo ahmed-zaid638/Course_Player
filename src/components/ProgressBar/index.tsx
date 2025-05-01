@@ -1,19 +1,26 @@
 import { useEffect, useState } from "react";
+import useWatchedVideos from "../../hooks/useWatchedVidoes";
 
 const ProgressBar = () => {
-  const initialPercentage = 84;
-  const className = "";
-
   const [mounted, setMounted] = useState(false);
-  const [percentage] = useState(initialPercentage);
+  const [percentage, setPercentage] = useState(0);
+  const { watchedVideos } = useWatchedVideos();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  useEffect(() => {
+    if (watchedVideos.length > 0) {
+      console.log(watchedVideos.length);
+      const averageProgress = watchedVideos.length / 7;
+      setPercentage(averageProgress * 100);
+    }
+  }, [watchedVideos]);
+
   if (!mounted) {
     return (
-      <div className={`w-full ${className}`}>
+      <div className="w-full mb-4">
         <div className="h-12 mb-2"></div>
         <div className="w-full h-10 border-2 border-blue-300 rounded-md"></div>
         <div className="h-12 mt-2"></div>
@@ -22,10 +29,14 @@ const ProgressBar = () => {
   }
 
   return (
-    <div className={`w-full ${className} mb-4 relative`}>
+    <div className="w-full mb-4 relative">
       <div
-        className="absolute -top-14 flex flex-col items-center z-10 transition-all duration-300"
-        style={{ left: `calc(${percentage}% - 27px)` }}
+        className="absolute -top-14  flex flex-col items-center z-10 transition-all duration-300"
+        style={{
+          left: `calc(${
+            percentage === 0 ? percentage + 1 : percentage - 1
+          }% - 20px)`,
+        }}
       >
         <div className="w-10 h-10 rounded-full border-2 border-[#C8C8C8] bg-white flex items-center justify-center">
           <span className="text-xs font-medium text-[#485293]">You</span>
@@ -42,10 +53,14 @@ const ProgressBar = () => {
 
       <div
         className="absolute top-full mt-[6px] flex flex-col items-center z-10 transition-all duration-300"
-        style={{ left: `calc(${percentage}% - 10px)` }}
+        style={{
+          left: `calc(${
+            percentage === 0 ? percentage + 1 : percentage - 3
+          }% - 3px)`,
+        }}
       >
         <span className="text-xs font-medium text-[#485293]">
-          {percentage}%
+          {percentage.toFixed(0)}%
         </span>
       </div>
     </div>

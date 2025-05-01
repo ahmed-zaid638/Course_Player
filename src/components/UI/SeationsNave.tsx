@@ -90,7 +90,7 @@ const SectionsNav = ({
         ].join(" ");
 
         const labelClasses = [
-          "text-sm font-medium transition-colors duration-200",
+          "text-md font-medium transition-colors duration-200",
           isActive
             ? "text-blue-600"
             : "text-gray-600 group-hover:text-blue-600",

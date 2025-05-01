@@ -1,6 +1,6 @@
-"use client";
 import { useEffect, useRef } from "react";
-import { Trophy } from "lucide-react";
+import { Trophy, PlayCircle } from "lucide-react"; // Importing PlayCircle icon
+import useWatchedVideos from "../../hooks/useWatchedVidoes"; // Assuming this hook is in the hooks folder
 
 interface LeaderboardEntry {
   id: number;
@@ -21,6 +21,9 @@ export default function CourseLeaderboard({
   onClose,
 }: CourseLeaderboardProps) {
   const modalRef = useRef<HTMLDivElement>(null);
+  const totalVideos = 7;
+  // Get watched videos using the custom hook
+  const { watchedVideos } = useWatchedVideos();
 
   const displayEntries =
     entries.length > 0
@@ -33,6 +36,21 @@ export default function CourseLeaderboard({
             score: 0,
             rank: i + 1,
           }));
+
+  // Calculate the percentage of videos watched
+  const percentageCompleted = totalVideos
+    ? Math.min((watchedVideos.length / 7) * 100, 100)
+    : 0;
+
+  // Define message based on watched videos count and percentage
+  const progressMessage =
+    watchedVideos.length > 0
+      ? `Great job! You've watched ${
+          watchedVideos.length
+        } out of ${totalVideos} videos (${Math.round(
+          percentageCompleted
+        )}%)! Keep going to reach the top!`
+      : "Start watching videos to make progress and climb the leaderboard!";
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -49,10 +67,7 @@ export default function CourseLeaderboard({
   }, [onClose]);
 
   return (
-    <div
-      className="fixed inset-0 bg-black/30 z-40 flex items-start justify-center pt-28"
-    
-    >
+    <div className="fixed inset-0 bg-black/30 z-40 flex items-start justify-center pt-28">
       <div
         ref={modalRef}
         className="max-w-md w-full bg-gray-50 p-6 rounded-lg shadow-sm"
@@ -64,16 +79,16 @@ export default function CourseLeaderboard({
         </div>
 
         {/* Highlight Box */}
-        <div className="flex items-start gap-2 mb-6 justify-end">
+        <div className="flex items-start gap-2 mb-6 justify-around">
           <div className="max-w-[70%]">
-            <p className="text-gray-600 text-sm leading-relaxed">
-              Congratulations! You've made great progress in this course. Keep
-              up the good work and improve your student skills to reach the top
-              of the leaderboard!
-            </p>
+            <p className="text-gray-600 text-xl leading-relaxed">{progressMessage}</p>
           </div>
           <div className="relative">
-            <Trophy className="h-10 w-10 text-yellow-400" />
+            {watchedVideos.length > 0 ? (
+              <Trophy className="h-10 w-10 text-yellow-400" />
+            ) : (
+              <PlayCircle className="h-10 w-10 text-gray-400" /> // Show Play icon when no videos are watched
+            )}
           </div>
         </div>
 

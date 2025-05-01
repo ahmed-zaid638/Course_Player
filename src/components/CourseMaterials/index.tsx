@@ -59,7 +59,7 @@ export default function CourseMaterials({
               className="flex items-center border-b md:border-b-0 pb-4 md:pb-0 border-gray-200"
             >
               <div className="w-8">{stat.icon}</div>
-              <div className="w-24 text-gray-600 text-sm">{stat.label}</div>
+              <div className="w-24 text-gray-600 text-md">{stat.label}</div>
               <div className="text-gray-800 font-medium">{stat.value}</div>
             </div>
           ))}
@@ -75,7 +75,7 @@ export default function CourseMaterials({
               className="flex items-center border-b md:border-b-0 pb-4 md:pb-0  border-gray-200"
             >
               <div className="w-8">{stat.icon}</div>
-              <div className="w-24 text-gray-600 text-sm">{stat.label}</div>
+              <div className="w-24 text-gray-600 text-md">{stat.label}</div>
               <div className="text-gray-800 font-medium">{stat.value}</div>
             </div>
           ))}

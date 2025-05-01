@@ -9,10 +9,9 @@ interface CurriculumProps {
 
 const Curriculum = ({ data, onClick }: CurriculumProps) => {
   console.log("Curriculum data:", data);
-  console.log("Curriculum onClick:", onClick);
   return (
     <section className="max-w-3xl mx-auto">
-      <div className="text-xl  font-semibold mb-12">Topics for this course</div>
+      <div className="text-[30px] mb-12">Topics for this course</div>
       <div className="mb-12">
         <ProgressBar />
       </div>

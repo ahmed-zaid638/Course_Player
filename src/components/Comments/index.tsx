@@ -54,11 +54,11 @@ export default function Comments({
               className="w-10 h-10 rounded-full object-cover"
             />
             <div>
-              <div className="font-medium text-gray-800">
+              <div className="font-medium text-gray-800 text-xl">
                 {comment.studentName}
               </div>
-              <div className="text-xs text-gray-500 mb-1">{comment.date}</div>
-              <p className="text-sm text-gray-600">{comment.content}</p>
+              <div className="text-md text-gray-500 mb-1">{comment.date}</div>
+              <p className="text-lg text-gray-600">{comment.content}</p>
             </div>
           </div>
         ))}
