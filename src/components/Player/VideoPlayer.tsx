@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import ReactPlayer from "react-player";
-import { Play, Pause, CheckCircle } from "lucide-react";
+import { Play, Pause } from "lucide-react";
 
 interface VideoPlayerProps {
   url: string;
@@ -15,7 +15,7 @@ const VideoPlayer = ({ url }: VideoPlayerProps) => {
   const [watched, setWatched] = useState(false);
 
   const storageKey = `watched_${url}`;
-
+  console.log(watched);
   useEffect(() => {
     const status = localStorage.getItem(storageKey);
     if (status === "watched") {
