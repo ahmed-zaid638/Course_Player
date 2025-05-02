@@ -9,7 +9,7 @@ interface SectionsNavItem {
 }
 interface SectionsNavProps {
   defaultActiveSection?: string;
-  onClick?: (type : string) => void;
+  onClick?: (type: string) => void;
 }
 
 const SectionsNav = ({
@@ -39,7 +39,7 @@ const SectionsNav = ({
     }
   };
   const handleAskQuestionClick = () => {
-     onClick?.("ask-question");
+    onClick?.("ask-question");
   };
   const handleLeaderboardClick = () => {
     onClick?.("leaderboard");
@@ -76,13 +76,13 @@ const SectionsNav = ({
 
   return (
     <div
-      className={`flex flex-wrap justify-between md:justify-start px-2  gap-4 md:gap-8 mt-4 `}
+      className={`flex flex-wrap justify-between md:justify-start px-2  gap-1 md:gap-8 mt-4 `}
     >
       {items.map((item) => {
         const isActive = activeSection === item.id;
 
         const iconWrapperClasses = [
-          "mb-2 p-3 rounded-full border transition-all duration-200",
+          "mb-2 p-2 md:p-3 rounded-full border transition-all duration-200",
           "group-hover:border-blue-500 group-hover:text-blue-500 group-hover:shadow-sm",
           isActive
             ? "border-blue-500 text-blue-500 bg-blue-50"
@@ -90,7 +90,7 @@ const SectionsNav = ({
         ].join(" ");
 
         const labelClasses = [
-          "text-md font-medium transition-colors duration-200",
+          "text-xs sm:text-md font-medium transition-colors duration-200",
           isActive
             ? "text-blue-600"
             : "text-gray-600 group-hover:text-blue-600",
@@ -109,7 +109,7 @@ const SectionsNav = ({
             className={buttonClasses}
           >
             <div className={iconWrapperClasses}>{item.icon}</div>
-            <span className={labelClasses}>{item.label}</span>
+            <span className={`${labelClasses}`}>{item.label}</span>
           </button>
         );
       })}
