@@ -38,6 +38,7 @@ const VideoPlayer = ({ url }: VideoPlayerProps) => {
       window.dispatchEvent(
         new CustomEvent("videoWatched", { detail: { url } })
       );
+     
     }
   };
 

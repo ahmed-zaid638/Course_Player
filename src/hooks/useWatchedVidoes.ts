@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 const useWatchedVideos = () => {
   const [watchedVideos, setWatchedVideos] = useState<string[]>([]);
 
-  // Function to update the watched videos from localStorage
   const fetchWatchedVideos = () => {
     const videos: string[] = [];
 
@@ -17,33 +16,20 @@ const useWatchedVideos = () => {
       }
     }
 
-    setWatchedVideos(videos); // Update the state with watched videos
+    setWatchedVideos(videos);
   };
 
   useEffect(() => {
-    // Initial load of watched videos
     fetchWatchedVideos();
 
-    // Listen for changes in localStorage (across different tabs/windows)
-    const handleStorageChange = () => {
-      console.log("Video watched detected");
-      fetchWatchedVideos(); // Refresh watched videos on storage change
-    };
+    const interval = setInterval(() => {
+      fetchWatchedVideos();
+    }, 1000); 
 
-    window.addEventListener("storage", handleStorageChange);
+    return () => clearInterval(interval);
+  }, []);
 
-    return () => {
-      window.removeEventListener("storage", handleStorageChange); // Clean up listener
-    };
-  }, []); // This will run on mount and whenever the component is rendered
-
-  // Add a method to update `localStorage` and trigger an update in the component
-  const markVideoAsWatched = (videoKey: string) => {
-    localStorage.setItem(videoKey, "watched"); // Mark the video as watched in localStorage
-    fetchWatchedVideos(); // Immediately update the state after watching the video
-  };
-
-  return { watchedVideos, markVideoAsWatched };
+  return { watchedVideos };
 };
 
 export default useWatchedVideos;
